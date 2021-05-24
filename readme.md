@@ -1,2 +1,2 @@
-##Attention about api key
-Yous should generate your api key from exchangerates web page
+## Attention about api key
+You should generate your api key from exchangerates web page
