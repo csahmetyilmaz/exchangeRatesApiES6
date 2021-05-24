@@ -1,28 +1,33 @@
-// Selecting elements
-
-const amountElement = document.querySelector('#amount');
-const firstSelect = document.querySelector('#firstCurrency');
-const secondSelect = document.querySelector('#secondCurrency');
-const API_KEY ="e48537d50fd4d92032ee6f456a1f355c";
-const currency = new Currency("USD", "EUR");
-
-
-
-
+const amountElement = document.querySelector("#amount");
+const firstSelect = document.querySelector("#firstCurrency");
+const secondSelect = document.querySelector("#secondCurrency");
+const currency = new Currency("EUR", "TRY");
+const ui = new UI(firstSelect, secondSelect);
 
 eventListeners();
 
 function eventListeners() {
     amountElement.addEventListener("input", exchangeCurrency);
-    firstSelect.onChange = function () {
 
+    firstSelect.onchange = function () {
+        currency.changeFirstCurrency(firstSelect.options[firstSelect.selectedIndex].textContent);
+        ui.changeFirst();
+
+        exchangeCurrency();
     };
-    secondSelect.onChange = function () {
 
+    secondSelect.onchange = function () {
+        currency.changeSecondCurrency(secondSelect.options[secondSelect.selectedIndex].textContent);
+        ui.changeSecond();
+
+        exchangeCurrency();
     };
 }
 
 function exchangeCurrency() {
-    currency.exchange();
+    currency.changeAmount(amountElement.value);
 
+    currency.exchange()
+        .then(result => ui.displayResult(result))
+        .catch(err => console.log(err));
 }
